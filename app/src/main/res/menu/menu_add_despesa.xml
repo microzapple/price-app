@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="net.ozielguimaraes.price.DespesaActivity">
+    <item
+        android:id="@+id/itListDespesa"
+        android:orderInCategory="100"
+        android:title="@string/title_despesas"
+        app:showAsAction="never" />
+</menu>
