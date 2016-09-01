@@ -1,11 +1,12 @@
 package net.ozielguimaraes.price;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.view.MenuItem;
 
 
@@ -39,13 +40,20 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.itNovaDespesa) {
-            Intent intent =new Intent(this, DespesaActivity.class);
-            startActivity(intent);
+        if (id == R.id.itAbout) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    public void listDespesa(View view){
+        Intent intent = new Intent(this, DespesaActivity.class);
+        startActivity(intent);
+    }
+
+    public void addDespesa(View view){
+        Intent intent = new Intent(this, AddDespesaActivity.class);
+        startActivity(intent);
+    }
 }

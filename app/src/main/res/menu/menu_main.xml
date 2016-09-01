@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="net.ozielguimaraes.price.MainActivity">
     <item
-        android:id="@+id/itNovaDespesa"
+        android:id="@+id/itAbout"
         android:orderInCategory="100"
-        android:title="@string/action_nova_despesa"
+        android:title="About me"
         app:showAsAction="never" />
 </menu>

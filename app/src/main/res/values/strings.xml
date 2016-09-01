@@ -2,6 +2,7 @@
     <string name="app_name">Price</string>
     <string name="action_settings">Settings</string>
     <string name="action_nova_despesa">Nova Despesa</string>
-    <string name="title_despesas">Despesas</string>
-    <string name="title_add_despesas">Nova Despesa</string>
-    </resources>
+    <string name="title_despesas">Minhas Despesas</string>
+    <string name="title_add_despesa">Nova Despesa</string>
+    <string name="save">Gravar</string>
+</resources>

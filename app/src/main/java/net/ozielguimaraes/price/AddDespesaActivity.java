@@ -6,21 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 /**
- * Created by Oziel on 31/08/2016.
+ * Created by Oziel on 01/09/2016.
  */
-public class DespesaActivity extends AppCompatActivity {
-
+public class AddDespesaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_depesas);
+        setContentView(R.layout.activity_add_despesa);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_list_despesas, menu);
+        getMenuInflater().inflate(R.menu.menu_add_despesa, menu);
         return true;
     }
 
@@ -31,8 +29,8 @@ public class DespesaActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.itAddDespesa) {
-            Intent intent = new Intent(this, AddDespesaActivity.class);
+        if (id == R.id.itListDespesa) {
+            Intent intent = new Intent(this, DespesaActivity.class);
             startActivity(intent);
             return true;
         }
