@@ -1,5 +1,6 @@
 package net.ozielguimaraes.price;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -33,6 +34,8 @@ public class DespesaActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.itListDespesa) {
+            Intent intent =new Intent(this, MainActivity.class);
+            startActivity(intent);
             return true;
         }
 
