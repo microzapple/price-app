@@ -1,19 +1,92 @@
 package net.ozielguimaraes.price;
 
 import android.content.Intent;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+
+import net.ozielguimaraes.price.domain.entities.Despesa;
+import net.ozielguimaraes.price.helpers.Notification;
+import net.ozielguimaraes.price.infra.data.repository.DbConnection;
+import net.ozielguimaraes.price.infra.data.repository.DespesaRepository;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * Created by Oziel on 01/09/2016.
  */
 public class AddDespesaActivity extends AppCompatActivity {
+    private EditText editDescricao;
+    private EditText editValor;
+    private EditText editVencimento;
+
+    private DbConnection dataBase;
+    private SQLiteDatabase conn;
+    private DespesaRepository despesaRepository;
+    private Despesa despesa;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_despesa);
+
+        editDescricao = (EditText)findViewById(R.id.editDescricao);
+        editValor = (EditText)findViewById(R.id.editValor);
+        editVencimento = (EditText)findViewById(R.id.editVencimento);
+
+        Bundle bundle = getIntent().getExtras();
+        if ((bundle != null) && (bundle.containsKey(DespesaActivity.PAR_DESPESA)))
+        {
+            despesa = (Despesa)bundle.getSerializable(DespesaActivity.PAR_DESPESA);
+            preencherDados();
+        }
+        else despesa = new Despesa();
+        try {
+            dataBase = new DbConnection(this);
+            conn = dataBase.getWritableDatabase();
+
+            despesaRepository = new DespesaRepository(conn);
+
+        }catch(SQLException ex)
+        {
+            Notification.ShowAlert(this, "Erro", "Erro ao criar o banco: " + ex.getMessage());
+        }
+    }
+
+    public void buttonGravar (View view){
+        salvar();
+        finish();
+    }
+
+    private void salvar() {
+        try {
+            despesa.setDescricao(editDescricao.getText().toString());
+            despesa.setValor(Double.parseDouble(editValor.getText().toString()));
+            despesa.setVencimento(editVencimento.getText().toString());
+
+            if (despesa.getId() == 0) despesaRepository.insert(despesa);
+            else despesaRepository.update(despesa);
+
+            Notification.ShowInfo(this, "Message", "Despesa gravada com sucesso");
+        } catch (Exception ex) {
+            Notification.ShowAlert(this, "Erro", "Erro ao salvar os dados: " + ex.getMessage());
+        }
+    }
+
+    private void preencherDados()
+    {
+        editDescricao.setText( despesa.getDescricao() );
+        editValor.setText( despesa.getValor().toString() );
+        DateFormat format = DateFormat.getDateInstance(DateFormat.SHORT);
+        String dt = format.format( despesa.getVencimento() );
+
+        editVencimento.setText( dt );
     }
 
     @Override

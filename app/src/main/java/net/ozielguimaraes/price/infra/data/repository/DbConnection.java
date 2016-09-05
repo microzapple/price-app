@@ -9,9 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DbConnection  extends SQLiteOpenHelper {
 
-    public DbConnection(Context context) {
-        super(context, "Price", null, 1);
-    }
+    public DbConnection(Context context) { super(context, "Price", null, 1); }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

@@ -28,23 +28,28 @@ public class DespesaRepository {
 
         values.put(Despesa.Descricao    , despesa.getDescricao());
         values.put(Despesa.Valor    , despesa.getValor());
-        values.put(Despesa.Vencimento, despesa.getVencimento().getTime());
+        values.put(Despesa.Vencimento, despesa.getVencimento());
 
         return values;
     }
 
-    public void insert(Despesa contato)
+    public void insert(Despesa despesa)
     {
-        ContentValues values = setContentValues(contato);
+        ContentValues values = setContentValues(despesa);
         conn.insertOrThrow(Despesa.Tabela, null, values);
     }
-    public DespesaArrayAdapter getContacts(Context context)
-    {
 
-        DespesaArrayAdapter adpDespesas = new DespesaArrayAdapter(context, R.layout.content_list_despesas );
+    public void update(Despesa despesa)
+    {
+        ContentValues values = setContentValues(despesa);
+        conn.update(Despesa.Tabela, values, " _id = ? ", new String[]{ String.valueOf( despesa.getId()) } );
+    }
+
+    public DespesaArrayAdapter getDespesas(Context context)
+    {
+        DespesaArrayAdapter adpDespesas = new DespesaArrayAdapter(context, R.layout.item_despesa );
 
         Cursor cursor  =  conn.query(Despesa.Tabela, null, null, null, null, null, null);
-
         if (cursor.getCount() > 0 )
         {
             cursor.moveToFirst();
@@ -53,7 +58,7 @@ public class DespesaRepository {
                 despesa.setId( cursor.getLong( cursor.getColumnIndex(Despesa.Id)));
                 despesa.setDescricao( cursor.getString( cursor.getColumnIndex(Despesa.Descricao)));
                 despesa.setValor(new Double(cursor.getString( cursor.getColumnIndex(Despesa.Valor ))));
-                despesa.setVencimento( new Date(cursor.getLong( cursor.getColumnIndex(Despesa.Vencimento))));
+                despesa.setVencimento(cursor.getString( cursor.getColumnIndex(Despesa.Vencimento)));
 
                 adpDespesas.add(despesa);
 

@@ -30,9 +30,8 @@ public class DespesaArrayAdapter extends ArrayAdapter<Despesa> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        View view = null;
-        ViewHolder viewHolder = null;
+        View view;
+        ViewHolder viewHolder;
 
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -45,9 +44,6 @@ public class DespesaArrayAdapter extends ArrayAdapter<Despesa> {
             viewHolder.txtVencimento = (TextView) view.findViewById(R.id.txtVencimento);
 
             view.setTag(viewHolder);
-
-            convertView = view;
-
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
             view = convertView;
@@ -56,9 +52,9 @@ public class DespesaArrayAdapter extends ArrayAdapter<Despesa> {
         Despesa despesa = getItem(position);
 
         if (new Date().before(despesa.getVencimento()))
-            viewHolder.txtCor.setBackgroundColor(context.getResources().getColor(R.color.colorRed));
-        else if (new Date().after(despesa.getVencimento()))
             viewHolder.txtCor.setBackgroundColor(context.getResources().getColor(R.color.colorGreen));
+        else if (new Date().after(despesa.getVencimento()))
+            viewHolder.txtCor.setBackgroundColor(context.getResources().getColor(R.color.colorRed));
         else
             viewHolder.txtCor.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
 

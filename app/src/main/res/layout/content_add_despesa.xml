@@ -69,5 +69,6 @@
         android:id="@+id/buttonGravar"
         android:textColor="@color/colorWhite"
         android:background="@color/colorPrimaryDark"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:onClick="buttonGravar"/>
 </LinearLayout>

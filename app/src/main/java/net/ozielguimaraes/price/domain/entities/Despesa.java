@@ -16,7 +16,7 @@ public class Despesa implements Serializable {
     private long id;
     private String descricao;
     private Double valor;
-    private Date vencimento;
+    private String vencimento;
 
     public Despesa(){id = 0;
     }
@@ -30,9 +30,8 @@ public class Despesa implements Serializable {
     public Double getValor() {return valor;}
     public void setValor(Double val) {this.valor = val;}
 
-    public Date getVencimento() {return vencimento;}
-    public void setVencimento(Date venc) {this.vencimento = venc;}
-
+    public String getVencimento() {return vencimento;}
+    public void setVencimento(String venc) {this.vencimento = venc;}
 
     @Override
     public String toString()
