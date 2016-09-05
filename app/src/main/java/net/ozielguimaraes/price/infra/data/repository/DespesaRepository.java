@@ -28,7 +28,7 @@ public class DespesaRepository {
 
         values.put(Despesa.Descricao    , despesa.getDescricao());
         values.put(Despesa.Valor    , despesa.getValor());
-        values.put(Despesa.Vencimento, despesa.getVencimento());
+        values.put(Despesa.Vencimento, despesa.getVencimento().toString());
 
         return values;
     }
@@ -43,6 +43,10 @@ public class DespesaRepository {
     {
         ContentValues values = setContentValues(despesa);
         conn.update(Despesa.Tabela, values, " _id = ? ", new String[]{ String.valueOf( despesa.getId()) } );
+    }
+
+    public void zerar(){
+        conn.execSQL("DELETE FROM " + Despesa.Tabela);
     }
 
     public DespesaArrayAdapter getDespesas(Context context)
