@@ -59,7 +59,7 @@
         android:inputType="textPersonName"
         android:hint="31/10/1992"
         android:ems="10"
-        android:id="@+id/editVencimento" />
+        android:id="@+id/editVencimento"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"

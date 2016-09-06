@@ -51,10 +51,11 @@ public class DespesaArrayAdapter extends ArrayAdapter<Despesa> {
 
         Despesa despesa = getItem(position);
 
-        if (new Date().before(despesa.getVencimento()))
-            viewHolder.txtCor.setBackgroundColor(context.getResources().getColor(R.color.colorRed));
-        else if (new Date().after(despesa.getVencimento()))
+        Date today = new Date();
+        if (today.before(despesa.getVencimento()))
             viewHolder.txtCor.setBackgroundColor(context.getResources().getColor(R.color.colorGreen));
+        else if (today.after(despesa.getVencimento()))
+            viewHolder.txtCor.setBackgroundColor(context.getResources().getColor(R.color.colorRed));
         else
             viewHolder.txtCor.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
 

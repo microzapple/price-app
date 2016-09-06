@@ -21,7 +21,6 @@ public class Despesa implements Serializable {
     private String descricao;
     private Double valor;
     private Date vencimento;
-    private String vencimentoString;
 
     public Despesa(){id = 0;
     }
@@ -35,8 +34,8 @@ public class Despesa implements Serializable {
     public Double getValor() {return valor;}
     public void setValor(Double val) {this.valor = val;}
 
-    public Date getVencimento() {return toDate(vencimentoString);}
-    public void setVencimento(String venc) {this.vencimento = toDate(venc);}
+    public Date getVencimento() {return this.vencimento;}
+    public void setVencimento(Date venc) {this.vencimento = venc;}
 
     @Override
     public String toString()
@@ -44,8 +43,8 @@ public class Despesa implements Serializable {
         return "Descrição:" + descricao + " | Valor: " + valor + " | Vencimento: " + vencimento;
     }
 
-    private Date toDate(String value) {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    public static Date toDate(String value) {
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         Date date = null;
         try {
             date = format.parse(value);

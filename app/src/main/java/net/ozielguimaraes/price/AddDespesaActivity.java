@@ -1,5 +1,7 @@
 package net.ozielguimaraes.price;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import net.ozielguimaraes.price.domain.entities.Despesa;
@@ -16,7 +19,6 @@ import net.ozielguimaraes.price.infra.data.repository.DbConnection;
 import net.ozielguimaraes.price.infra.data.repository.DespesaRepository;
 
 import java.text.DateFormat;
-import java.util.Date;
 
 /**
  * Created by Oziel on 01/09/2016.
@@ -26,8 +28,6 @@ public class AddDespesaActivity extends AppCompatActivity {
     private EditText editValor;
     private EditText editVencimento;
 
-    private DbConnection dataBase;
-    private SQLiteDatabase conn;
     private DespesaRepository despesaRepository;
     private Despesa despesa;
 
@@ -48,15 +48,33 @@ public class AddDespesaActivity extends AppCompatActivity {
         }
         else despesa = new Despesa();
         try {
-            dataBase = new DbConnection(this);
-            conn = dataBase.getWritableDatabase();
+            DbConnection dataBase = new DbConnection(this);
+            SQLiteDatabase conn = dataBase.getWritableDatabase();
 
             despesaRepository = new DespesaRepository(conn);
 
+            showCalendarVencimento();
         }catch(SQLException ex)
         {
             Notification.ShowAlert(this, "Erro", "Erro ao criar o banco: " + ex.getMessage());
         }
+    }
+
+    public void showCalendarVencimento(){
+        editVencimento = (EditText)findViewById(R.id.editVencimento);
+
+        editVencimento.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                showDialog(dialogId);
+            }
+        });
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        if(id == dialogId) return new DatePickerDialog(this, dtPickerListener, year_x, month_x, day_x);
+        return super.onCreateDialog(id);
     }
 
     public void buttonGravar (View view){
@@ -68,7 +86,7 @@ public class AddDespesaActivity extends AppCompatActivity {
         try {
             despesa.setDescricao(editDescricao.getText().toString());
             despesa.setValor(Double.parseDouble(editValor.getText().toString()));
-            despesa.setVencimento(editVencimento.getText().toString());
+            despesa.setVencimento(Despesa.toDate(editVencimento.getText().toString()));
 
             if (despesa.getId() == 0) despesaRepository.insert(despesa);
             else despesaRepository.update(despesa);
@@ -88,6 +106,19 @@ public class AddDespesaActivity extends AppCompatActivity {
 
         editVencimento.setText( dt );
     }
+
+    int year_x = 1980, month_x, day_x;
+    static final int dialogId = 0;
+    private DatePickerDialog.OnDateSetListener dtPickerListener = new DatePickerDialog.OnDateSetListener(){
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            year_x = year;
+            month_x = month;
+            day_x = dayOfMonth;
+            String date = day_x + "/" + (month_x + 1) + "/" + year_x;
+            editVencimento.setText(date);
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

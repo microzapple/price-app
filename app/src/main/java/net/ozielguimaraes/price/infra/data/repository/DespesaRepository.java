@@ -62,7 +62,7 @@ public class DespesaRepository {
                 despesa.setId( cursor.getLong( cursor.getColumnIndex(Despesa.Id)));
                 despesa.setDescricao( cursor.getString( cursor.getColumnIndex(Despesa.Descricao)));
                 despesa.setValor(new Double(cursor.getString( cursor.getColumnIndex(Despesa.Valor ))));
-                despesa.setVencimento(cursor.getString( cursor.getColumnIndex(Despesa.Vencimento)));
+                despesa.setVencimento(new Date(cursor.getString( cursor.getColumnIndex(Despesa.Vencimento))));
 
                 adpDespesas.add(despesa);
 
